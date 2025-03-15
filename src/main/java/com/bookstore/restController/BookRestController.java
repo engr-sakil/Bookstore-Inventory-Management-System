@@ -3,6 +3,8 @@ package com.bookstore.restController;
 import com.bookstore.model.Book;
 import com.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +41,18 @@ public class BookRestController {
     public ResponseEntity<String> deleteBook(@PathVariable int book_id){
         String deleteStatus = bookService.deleteById(book_id);
         return new ResponseEntity<>(deleteStatus, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<Book>> searchBooks(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String genre,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "2") int size){
+        PageRequest pageable = PageRequest.of(page, size);
+        Page<Book> books = bookService.searchBooks(title, author, genre, pageable);
+        return ResponseEntity.ok(books);
     }
 
 }

@@ -2,10 +2,12 @@ package com.bookstore.service;
 
 import com.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.bookstore.model.Book;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,5 +44,11 @@ public class BookServiceImplement implements BookService {
         }else{
             return "No Record Found";
         }
+    }
+
+    @Override
+    public Page<Book> searchBooks(String title, String author, String genre, Pageable pageable) {
+        Page<Book> books = bookRepo.searchBooks(title,author,genre, pageable);
+        return books;
     }
 }
