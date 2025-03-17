@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/admin/api")
 public class AuthorRestController {
     @Autowired
     private AuthorService authorService;

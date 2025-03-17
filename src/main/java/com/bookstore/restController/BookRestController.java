@@ -15,7 +15,7 @@ import java.util.List;
 public class BookRestController {
     @Autowired
     private BookService bookService;
-    @PostMapping("/book")
+    @PostMapping("admin/api/book")
     public ResponseEntity<Book> createBook(@RequestBody Book book){
         String responseStatus = bookService.upsert(book);
         return new ResponseEntity<>(book, HttpStatus.CREATED);
@@ -26,18 +26,18 @@ public class BookRestController {
         Book book = bookService.getById(book_id);
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
-    @GetMapping("/all-books")
+    @GetMapping("/all-book")
     public ResponseEntity<List<Book>> getAllBooks(){
         List<Book> allBooks = bookService.getAllBooks();
         return new ResponseEntity<>(allBooks, HttpStatus.OK);
     }
 
-    @PutMapping("/book")
+    @PutMapping("admin/api/book")
     public ResponseEntity<String> updateBook(@RequestBody Book book){
         String updateStatus = bookService.upsert(book);
         return new ResponseEntity<>(updateStatus, HttpStatus.OK);
     }
-    @DeleteMapping("/book/{book_id}")
+    @DeleteMapping("admin/api/book/{book_id}")
     public ResponseEntity<String> deleteBook(@PathVariable int book_id){
         String deleteStatus = bookService.deleteById(book_id);
         return new ResponseEntity<>(deleteStatus, HttpStatus.OK);
